@@ -3,47 +3,12 @@ let taskList = JSON.parse(localStorage.getItem("tasks"));
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 
 // Todo: create a function to generate a unique task id
-function generateTaskId() {
-  if (nextId === null) {
-    nextId = 0;
-  } 
-
-  nextId++;
-  
-  localStorage.setItem("nextId",JSON.stringify(nextId));
-
-  return nextId;
+function generateTaskID () {
+  return crypto.randomUUID();
 }
 
 // Todo: create a function to create a task card
-function createTaskCard(task) {
-  let card = document.createElement('div');
-  card.className = 'card';
-  let cardBody = document.createElement('div');
-  cardBody.className = 'card-body';
 
-  let title = document.createElement('h5');
-  title.className = 'card-title';
-  title.textContent = task.title;
-
-  let description = document.createElement('p');
-  description.className = 'card-text';
-  description.textContent = task.description;
-
-  let deleteBtn = document.createElement('button');
-  deleteBtn.className = 'btn btn-danger';
-  deleteBtn.textContent = 'Delete';
-  deleteBtn.onclick = function() {
-    handleDeleteTask(task.id);
-  };
-
-  cardBody.appendChild(title);
-  cardBody.appendChild(description);
-  cardBody.appendChild(deleteBtn);
-  card.appendChild(cardBody);
-
-  return card;
-}
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
