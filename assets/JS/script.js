@@ -11,25 +11,34 @@ function generateTaskId() {
 
 // Function to create a task card
 function createTaskCard(task) {
-    const newCard = $('<div>')
-        .addClass('card drag mb-3')
-        .attr('data-id', task.id);
-    const cardHeader = $('<div>').addClass('card-header h4').text(task.title);
-    const cardBody = $('<div>').addClass('card-body');
-    const cardDescription = $('<h5>').addClass('card-text').text(task.description);
-    const cardDueDate = $('<p>').addClass('card-text').text("Due: " + task.dueDate);
-    const cardDeleteBtn = $('<button>')
-        .addClass('btn btn-danger delete')
-        .text('Delete')
-        .attr('data-id', task.id)
-        .on('click', function() {
-            handleDeleteTask(task.id);
-        });
+  const newCard = $('<div>').addClass('card drag mb-3').attr('data-id', task.id);
+  const cardHeader = $('<div>').addClass('card-header h4').text(task.title);
+  const cardBody = $('<div>').addClass('card-body');
+  const cardDescription = $('<h5>').addClass('card-text').text(task.description);
+  const cardDueDate = $('<p>').addClass('card-text').text("Due: " + task.dueDate);
+  const cardDeleteBtn = $('<button>').addClass('btn btn-danger delete').text('Delete').attr('data-id', task.id);
 
-    cardBody.append(cardDescription, cardDueDate, cardDeleteBtn);
-    newCard.append(cardHeader, cardBody);
-    return newCard;
+  // Date comparison to color code the card
+  const currentDate = dayjs();
+  const dueDate = dayjs(task.dueDate);
+
+  // Apply color coding based on due date proximity
+  if (currentDate.isAfter(dueDate)) {
+      newCard.addClass('bg-danger');  // Task is overdue
+  } else if (dueDate.diff(currentDate, 'day') <= 3) {  // Adjust the '3' to change sensitivity
+      newCard.addClass('bg-warning');  // Task is nearing deadline
+  }
+
+  cardDeleteBtn.on('click', () => {
+      handleDeleteTask(task.id);
+  });
+
+  cardBody.append(cardDescription, cardDueDate, cardDeleteBtn);
+  newCard.append(cardHeader, cardBody);
+
+  return newCard;
 }
+
 
 // Function to render the task list and make cards draggable
 function renderTaskList() {
