@@ -4,7 +4,7 @@
 
 # Mock-up
 
-![shown view of finished webpage with updates](./assets/Images/Task%20Board%20#1.png)![shown view of finished webpage with updates](./assets/Images/Task%20Board%20#2.png)
+![shown view of finished webpage with updates](./assets/Images/taskboard1.png)![shown view of finished webpage with updates](./assets/Images/taskboard2.png)
 
 # Deployed Application
 
