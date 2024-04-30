@@ -18,15 +18,13 @@ function createTaskCard(task) {
   const cardDueDate = $('<p>').addClass('card-text').text("Due: " + task.dueDate);
   const cardDeleteBtn = $('<button>').addClass('btn btn-danger delete').text('Delete').attr('data-id', task.id);
 
-  // Date comparison to color code the card
   const currentDate = dayjs();
   const dueDate = dayjs(task.dueDate);
 
-  // Apply color coding based on due date proximity
   if (currentDate.isAfter(dueDate)) {
-      newCard.addClass('bg-danger');  // Task is overdue
-  } else if (dueDate.diff(currentDate, 'day') <= 3) {  // Adjust the '3' to change sensitivity
-      newCard.addClass('bg-warning');  // Task is nearing deadline
+      newCard.addClass('bg-danger');  
+  } else if (dueDate.diff(currentDate, 'day') <= 3) {  
+      newCard.addClass('bg-warning');  
   }
 
   cardDeleteBtn.on('click', () => {
@@ -47,7 +45,7 @@ function renderTaskList() {
   $('#done-cards').empty();
 
   taskList.forEach(task => {
-      let status = task.status || task.state;  // Handle mixed property usage
+      let status = task.status || task.state;  
       if (status === 'to-do') {
           $('#todo-cards').append(createTaskCard(task));
       } else if (status === 'in-progress') {
@@ -95,13 +93,13 @@ function handleDrop(event, ui) {
   const droppedItem = ui.draggable;
   const newStatus = $(this).attr('id').replace('-cards', '');
 
-  // Find the task in the taskList and update its status
+ 
   const taskId = droppedItem.data('id');
   const task = taskList.find(task => task.id === taskId);
   if (task) {
       task.status = newStatus;
-      localStorage.setItem('tasks', JSON.stringify(taskList));  // Update localStorage
-      renderTaskList();  // Re-render to reflect changes
+      localStorage.setItem('tasks', JSON.stringify(taskList)); 
+      renderTaskList();  
   }
 }
 
